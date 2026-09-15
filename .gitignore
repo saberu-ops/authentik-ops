@@ -1,0 +1,16 @@
+# 密钥：真实值只存在于部署主机的 .env
+.env
+.env.*
+!.env.example
+.akadmin-initial-password
+
+# 旧部署目录里的时间戳备份（*.20260915T125723Z.bak 等）
+*.bak
+
+# 运行时状态与数据（只存在于部署主机，由 scripts/backup-postgres.sh 备份）
+data/
+certs/
+custom-templates/
+backups/
+caddy-data/
+caddy-config/

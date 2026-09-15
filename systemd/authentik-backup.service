@@ -1,0 +1,8 @@
+[Unit]
+Description=authentik backup (database + config)
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/authentik/scripts/backup-postgres.sh

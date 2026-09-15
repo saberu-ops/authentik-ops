@@ -1,0 +1,26 @@
+services:
+  postgresql:
+    logging: &ak-logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  server:
+    logging: *ak-logging
+  worker:
+    logging: *ak-logging
+  caddy:
+    image: caddy:2.11.4-alpine
+    depends_on:
+      server:
+        condition: service_started
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-data:/data
+      - ./caddy-config:/config
+      - /var/log/caddy:/var/log/caddy
