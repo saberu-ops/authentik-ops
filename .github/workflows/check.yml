@@ -1,0 +1,21 @@
+# 与本地相同的检查入口：scripts/check.sh（Compose 不变量、Caddyfile、shellcheck、systemd 单元、文档与单元测试）。
+name: check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      # 第三方 Action 固定到提交哈希，注释标明对应版本。
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - name: scripts/check.sh
+        run: scripts/check.sh

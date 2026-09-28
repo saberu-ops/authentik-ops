@@ -60,9 +60,13 @@ scripts/check.sh
 ```
 
 它解析 compose 配置并校验上述不变量，校验 `Caddyfile`、shell 脚本、systemd 单元、忽略规则，
-并通过 `scripts/check_docs.py` 检查 agent 入口文件、文档链接与 RUNBOOK 必需章节。
+并通过 `scripts/check_docs.py` 检查 agent 入口文件、文档链接与锚点、资料索引、方案与评审编号，以及 RUNBOOK 必需章节。
 需要 Docker Compose 与 python3；`shellcheck`、`systemd-analyze` 存在时自动运行。
 它会运行一次性离线容器校验 `Caddyfile`，在部署主机上运行即属于主机操作；`--no-containers` 跳过这一项。
 不要在开发机的工作树里执行 `docker compose up`。
 
 部署主机上的更新、升级、备份、恢复、密钥轮换与回滚见 [RUNBOOK.md](RUNBOOK.md)。
+
+## 资料
+
+项目资料索引见 [docs/README.md](docs/README.md)。当前的部署和运维方式以本文件和 [RUNBOOK.md](RUNBOOK.md) 为准。

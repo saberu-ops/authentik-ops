@@ -116,11 +116,13 @@ else
   skip "systemd-analyze 未安装"
 fi
 
-# 6) 文档、agent 入口文件与 RUNBOOK 章节
-python3 scripts/check_docs.py || failed=1
+# 6) 文档、agent 入口文件与 RUNBOOK 章节；tests/ 中的单元测试
+python3 -B scripts/check_docs.py || failed=1
+if python3 -B -m unittest discover -s tests -q; then ok "单元测试"; else bad "单元测试"; fi
 
 # 7) 忽略规则：密钥与运行时状态不会被 Git 跟踪
-if [[ -d .git ]]; then
+# worktree 里的 .git 是文件而不是目录，所以由 git 自己判断是否位于工作树中。
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   for path in .env .env.20260101T000000Z.bak .akadmin-initial-password data/x certs/x caddy-data/x; do
     if git check-ignore -q --no-index "${path}"; then ok "git 忽略 ${path}"; else bad "git 未忽略 ${path}"; fi
   done
